@@ -1,0 +1,10 @@
+name: bikestations
+title:
+username:
+account: maxbrs
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 281692
+bundleId: 1224106
+url: https://maxbrs.shinyapps.io/bikestations/
+when: 1518678784.69492
