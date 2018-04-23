@@ -32,7 +32,7 @@ val tripData = bikeTrip.
     drop("name")
 // tripData.show(10)
 
-var tripVertices: RDD[Edge[Long]] = tripData.
+var tripArrays: RDD[Edge[Long]] = tripData.
     select("start_station_id", "end_station_id").
     rdd.
     map(x => (x, 1)).
@@ -43,8 +43,8 @@ var tripVertices: RDD[Edge[Long]] = tripData.
         val end = x._1(1).asInstanceOf[Number].longValue
         Edge(start, end, x._2)
     })
-// tripVertices.count()
-// tripVertices.foreach(x => println(x))
+// tripArrays.count()
+// tripArrays.foreach(x => println(x))
 
 
 var stationNodes: RDD[(VertexId, (String, List[Double], Int, String, String))] = 
@@ -64,7 +64,7 @@ var stationNodes: RDD[(VertexId, (String, List[Double], Int, String, String))] =
 // stationNodes.count()
 // stationNodes.foreach(x => println(x))
 
-var graph: Graph[(String, List[Double], Int, String, String), Long] = Graph(stationNodes, tripVertices)
+var graph: Graph[(String, List[Double], Int, String, String), Long] = Graph(stationNodes, tripArrays)
 graph.cache()
 
 
@@ -74,20 +74,23 @@ for (triplet <- graph.triplets.collect) {
 }
 
 graph.vertices.count // Nodes
-
-graph.edges.count  // Vertices
+graph.edges.count  // Arrays
 
 graph.
-vertices.
-filter {
-    case (id, (name, gps, dockCount, city, date)) => city == "Redwood City"
-}.
-foreach {
-    case (id, (name, gps, dockCount, city, date)) => println(s"City : $city || stop : $name")
-}
+    vertices.
+    filter {
+        case (id, (name, gps, dockCount, city, date)) => city == "Redwood City"
+    }.
+    foreach {
+        case (id, (name, gps, dockCount, city, date)) => println(s"City : $city || Stop : $name")
+    }
 
 
-
+graph.
+    edges.
+    foreach {
+        case (Edge(id_start, id_end, weight)) => println(s"start : $id_start || end : $id_end -> weight = $weight")
+    }
 
 
 
