@@ -70,7 +70,7 @@ graph.cache()
 
 
 for (triplet <- graph.triplets.collect) {
-    println(s"FROM ${triplet.srcAttr._1} TO ${triplet.dstAttr._1} && ... ${triplet.dstAttr._4}")
+    println(s"${triplet.attr} TRIPS | FROM ${triplet.srcAttr._1} TO ${triplet.dstAttr._1} | (in ${triplet.dstAttr._4})")
 }
 
 graph.vertices.count // Nodes
