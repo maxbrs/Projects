@@ -79,7 +79,7 @@ graph.edges.count  // Arrays
 graph.
     vertices.
     filter {
-        case (id, (name, gps, dockCount, city, date)) => city == "Redwood City"
+        case (id, (name, gps, dockCount, city, date)) => city == "San Francisco" //Redwood City
     }.
     foreach {
         case (id, (name, gps, dockCount, city, date)) => println(s"City : $city || Stop : $name")
@@ -91,9 +91,3 @@ graph.
     foreach {
         case (Edge(id_start, id_end, weight)) => println(s"start : $id_start || end : $id_end -> weight = $weight")
     }
-
-
-
-
-
-
