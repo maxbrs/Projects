@@ -83,11 +83,15 @@ var stationNodes: RDD[(VertexId, (String, List[Double], Int, String, String))] =
 var graph: Graph[(String, List[Double], Int, String, String), Long] = Graph(stationNodes, simArrays)
 graph.cache()
 
-
-
 for (triplet <- graph.triplets.collect) {
     println(s"SIMILARITY BETWEEN ${triplet.srcAttr._1} AND ${triplet.dstAttr._1} = ${triplet.attr}")
 }
-
 graph.vertices.count // Nodes
 graph.edges.count  // Arrays
+
+var subgraph = graph.subgraph(epred = edge => edge.attr <= 10 && edge.srcId != edge.dstId)
+for (triplet <- subgraph.triplets.collect) {
+    println(s"SIMILARITY BETWEEN ${triplet.srcAttr._1} AND ${triplet.dstAttr._1} = ${triplet.attr}")
+}
+subgraph.vertices.count // Nodes
+subgraph.edges.count  // Arrays
