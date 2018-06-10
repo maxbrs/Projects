@@ -3,10 +3,10 @@
 
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
-import MySQLdb
+#import MySQLdb
 from datetime import datetime
 import json
-import re
+#import re
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'

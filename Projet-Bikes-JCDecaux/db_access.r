@@ -1,12 +1,13 @@
 debut <- Sys.time()
 
 library(RMySQL)
+library(xts)
+library(dplyr)
 library(leaflet)
 library(ggplot2)
 library(ggmap)
 
-setwd("C:/Users/mbriens/Documents/Kaggle/GIT/Kaggle/Projet-Bikes-JCDecaux")
-# setwd("C:/Users/mbriens/Documents/Kaggle/GIT/Kaggle/Projet-Bikes-JCDecaux/BikeStations")
+setwd("~/GitHub-Projects/GIT/Projects/Projet-Bikes-JCDecaux/BikeStations")
 
 #----------------------------------------
 
@@ -59,9 +60,18 @@ print(m)
 
 
 
+
+
 query = dbSendQuery(mydb, "SELECT * FROM bike")
 data = fetch(query, n=-1)
 #print(data)
+
+df <- df %>% mutate(
+  bik_ID = as.factor(bik_ID),
+  bik_sta_ID = as.factor(bik_sta_ID),
+  bik_status = as.factor(bik_status)
+)
+df$bik_timestamp = strptime(df$bik_timestamp, "%Y-%m-%d %H:%M:%S")
 
 df = data[data$bik_sta_ID == 12,]
 
@@ -70,7 +80,11 @@ axis.Date(1, at = df$bik_timestamp, labels = format(df$bik_timestamp,"%b-%d"), l
 
 
 
-plot(data$bik_timestamp)
+
+df$bik_timestamp <- strptime(df$bik_timestamp, "%Y-%m-%d %H:%M:%S")
+hnew_dataxts <- xts(df$bik_available, order.by=df[,"bik_timestamp"])
+
+plot(hnew_dataxts)
 
 
 
