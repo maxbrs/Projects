@@ -34,6 +34,10 @@ port = 5005
 
 mydb = dbConnect(MySQL(), user=user, password=password, dbname=database_name, host=host, port=port)
 
+
+
+
+
 # Show tables in database
 dbListTables(mydb)
 
@@ -44,7 +48,6 @@ dbListFields(mydb, 'bike')
 query = dbSendQuery(mydb, "SELECT * FROM station")
 data = fetch(query, n=-1)
 print(data)
-
 
 df = data[data$sta_city == "Toulouse",]
 
@@ -58,33 +61,28 @@ print(m)
 
 
 
-
-
-
+Sys.time()
+today = as.Date(strptime("2018-02-08 21:55:10", "%Y-%m-%d %H:%M:%S"))
 
 query = dbSendQuery(mydb, "SELECT * FROM bike")
 data = fetch(query, n=-1)
 #print(data)
 
-df <- df %>% mutate(
+data <- data %>% mutate(
   bik_ID = as.factor(bik_ID),
   bik_sta_ID = as.factor(bik_sta_ID),
   bik_status = as.factor(bik_status)
 )
-df$bik_timestamp = strptime(df$bik_timestamp, "%Y-%m-%d %H:%M:%S")
-
-df = data[data$bik_sta_ID == 12,]
-
-plot(as.Date(df$bik_timestamp), as.integer(df$bik_available))
-axis.Date(1, at = df$bik_timestamp, labels = format(df$bik_timestamp,"%b-%d"), las=2)
+data$bik_timestamp = strptime(data$bik_timestamp, "%Y-%m-%d %H:%M:%S")
 
 
+choice = 2
 
-
-df$bik_timestamp <- strptime(df$bik_timestamp, "%Y-%m-%d %H:%M:%S")
+df = data[as.Date(data$bik_timestamp) == today & data$bik_sta_ID == choice,]
+# plot(as.Date(df$bik_timestamp), as.integer(df$bik_available))
+#axis.Date(1, at = df$bik_timestamp, labels = format(df$bik_timestamp,"%b-%d"), las=2)
 hnew_dataxts <- xts(df$bik_available, order.by=df[,"bik_timestamp"])
-
-plot(hnew_dataxts)
+plot(hnew_dataxts, type="s")
 
 
 
