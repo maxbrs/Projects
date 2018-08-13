@@ -15,7 +15,7 @@ def demo(lock, position, total):
     for _ in range(0, total, 5):
         with lock:
             progress.update(5)
-        time.sleep(0.1)
+        time.sleep(0.25)
     with lock:
         progress.close()
 
