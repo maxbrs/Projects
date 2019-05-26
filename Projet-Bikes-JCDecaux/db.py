@@ -3,10 +3,8 @@
 
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
-#import MySQLdb
 from datetime import datetime
-import json
-#import re
+import simplejson as json
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
@@ -105,7 +103,6 @@ def add_bikedata():
 	return 'DONE !'
 
 def call_bikestation(name, lat, lon, address, available_bike_stands, available_bikes, banking, bonus, bike_stands, city, number, status, time):
-	#print("CALL ADD_BIKE_STATION('"+str(name)+"'," + str(lat)+","+str(lon)+",'"+str(address)+"',"+str(available_bike_stands)+","+str(available_bikes)+","+str(banking)+","+str(bonus)+","+str(bike_stands)+",'"+str(city)+"',"+str(number)+",'"+str(status)+"','"+str(time)+"');")
 	query = "CALL ADD_BIKE_STATION('"+str(name)+"'," + str(lat)+","+str(lon)+",'"+str(address)+"',"+str(available_bike_stands)+","+str(available_bikes)+","+str(banking)+","+str(bonus)+","+str(bike_stands)+",'"+str(city)+"',"+str(number)+",'"+str(status)+"','"+str(time)+"');"
 	cur = mysql.connection.cursor()
 	cur.execute(query)
