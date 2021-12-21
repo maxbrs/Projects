@@ -1,0 +1,6 @@
+file_name: './scrapped_accounts_{placeholder}.csv'
+
+pages_to_scrap: -1
+
+URLs:
+  housing_oslo: 'https://www.finn.no/realestate/homes/search.html?lifecycle=1&location=0.20061&sort=PUBLISHED_DESC'
